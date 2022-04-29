@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">UnoManager</string>
+    <string name="picture_description">Picture of Sofi (6 years old)</string>
+    <string name="add_player">Додай гравця!</string>
+    <string name="add_player_question"> Введіть ім\'я гравця</string>
+    <string name="player_name">Ім\'я</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="group_name_1">ГРАВЕЦЬ 1</string>
+    <string name="group_name_2">ГРАВЕЦЬ 2</string>
+    <string name="group_name_3">ГРАВЕЦЬ 3</string>
+    <string name="group_name_4">ГРАВЕЦЬ 4</string>
+    <string name="group_name_5">ГРАВЕЦЬ 5</string>
+    <string name="group_name_6">ГРАВЕЦЬ 6</string>
+    <string name="group_name_7">ГРАВЕЦЬ 7</string>
+    <string name="group_name_8">ГРАВЕЦЬ 8</string>
+    <string name="group_name_9">ГРАВЕЦЬ 9</string>
+    <string name="group_name_10">ГРАВЕЦЬ 10</string>
+    <string name="button_clear">Очистити</string>
+</resources>

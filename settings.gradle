@@ -1,0 +1,2 @@
+rootProject.name='UnoManager'
+include ':app'
