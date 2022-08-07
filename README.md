@@ -13,3 +13,5 @@
 <img src="screenshots/phone/screenshot_1658862943.png" alt="Screen_2" width="200 px"/>
 <img src="screenshots/phone/screenshot_1658863064.png" alt="Screen_3" width="200 px"/>
 <img src="screenshots/phone/screenshot_1658863075.png" alt="Screen_4" width="200 px"/>
+
+Private policy https://vitargo.github.io/unomanager
