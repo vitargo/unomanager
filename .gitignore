@@ -16,11 +16,13 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+/.idea/
 /.idea/gradle.xml
 /.idea/workspace.xml
 *.iws
 *.iml
 *.ipr
+/local.properties
 
 ### NetBeans ###
 /nbproject/private/
@@ -40,3 +42,5 @@ build/
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+
+

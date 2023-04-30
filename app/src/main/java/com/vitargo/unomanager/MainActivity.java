@@ -1,4 +1,4 @@
-package com.example.unomanager;
+package com.vitargo.unomanager;
 
 import android.content.Context;
 import android.content.DialogInterface;

@@ -1,4 +1,4 @@
-package com.example.unomanager;
+package com.vitargo.unomanager;
 
 import org.junit.Test;
 
