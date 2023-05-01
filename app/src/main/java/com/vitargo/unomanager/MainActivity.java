@@ -2,6 +2,7 @@ package com.vitargo.unomanager;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         resultTable = new HashMap<>();
         setContentView(R.layout.activity_main);
 
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
 
         Button button = findViewById(R.id.button_add_player);
         Button clear = findViewById(R.id.button_clear);
+        Button rule = findViewById(R.id.button_rule);
 
         scorePlayer1.setOnKeyListener(getOnKeyListener(scorePlayer1, findViewById(R.id.result_1)));
         scorePlayer2.setOnKeyListener(getOnKeyListener(scorePlayer2, findViewById(R.id.result_2)));
@@ -55,18 +58,11 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
         scorePlayer9.setOnKeyListener(getOnKeyListener(scorePlayer9, findViewById(R.id.result_9)));
         scorePlayer10.setOnKeyListener(getOnKeyListener(scorePlayer10, findViewById(R.id.result_10)));
 
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                addPlayer();
-            }
-        });
+        button.setOnClickListener(v -> addPlayer());
 
-        clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clear();
-            }
-        });
+        clear.setOnClickListener(view -> clear());
+
+        rule.setOnClickListener(view -> showRules());
     }
 
     private View.OnKeyListener getOnKeyListener(EditText scorePlayer, TextView resultPlayer) {
@@ -162,6 +158,11 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
     private void clear() {
         finish();
         startActivity(getIntent());
+    }
+
+    private void showRules() {
+        Intent intent = new Intent(this, ScrollingActivity.class);
+        startActivity(intent);
     }
 
     private void addPlayer() {
