@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,6 +21,8 @@ import static java.lang.String.valueOf;
 public class MainActivity extends AppCompatActivity implements AddPlayerDialog.AddPlayerDialogListener {
     private int counter = 0;
     Map<Integer, Integer> resultTable;
+    private static final int GREEN = Color.rgb(107, 142, 35);
+    private static final int RED = Color.rgb(178, 34, 34);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
 
                 }
             }
+            int[] keys = customSort().keySet().stream().mapToInt(Number::intValue).toArray();
+            TextView maxScore = findViewById(keys[0]);
+            maxScore.setTextColor(GREEN);
+            TextView minScore = findViewById(keys[keys.length-1]);
+            minScore.setTextColor(RED);
         }
     }
 
@@ -130,8 +136,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
             score.clearFocus();
             score.getText().clear();
         } else {
-            int green = Color.rgb(107, 142, 35);
-            int red = Color.rgb(178, 34, 34);
+
             int sum = current + total;
             score.getText().clear();
             score.clearFocus();
@@ -144,10 +149,8 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
             result.setText(valueOf(sum));
 
             resultTable.put(result.getId(), sum);
-
             HashMap<Integer, Integer> sortedMap = customSort();
-            int[] keys = new int[0];
-            keys = sortedMap.keySet().stream().mapToInt(Number::intValue).toArray();
+            int[] keys = sortedMap.keySet().stream().mapToInt(Number::intValue).toArray();
             for (Integer textView : keys) {
                 TextView allResult = findViewById(textView);
                 allResult.setTextColor(Color.BLACK);
@@ -155,23 +158,23 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
 
             if (!Objects.equals(resultTable.get(keys[keys.length - 1]), resultTable.get(keys[0]))) {
                 TextView playerResult = findViewById(keys[0]);
-                playerResult.setTextColor(green);
+                playerResult.setTextColor(GREEN);
                 for (int i = 1; i < keys.length; i++) {
                     if (resultTable.get(keys[i]) == resultTable.get(keys[0])) {
                         TextView maxResult = findViewById(keys[i]);
-                        maxResult.setTextColor(green);
+                        maxResult.setTextColor(GREEN);
                     }
                 }
                 TextView minResult = findViewById(keys[keys.length - 1]);
-                minResult.setTextColor(red);
+                minResult.setTextColor(RED);
                 for (int i = keys.length - 2; i < 0; i++) {
                     TextView maxResult = findViewById(keys[i]);
-                    maxResult.setTextColor(red);
+                    maxResult.setTextColor(RED);
                 }
             } else {
                 for (Integer textView : keys) {
                     TextView allResult = findViewById(textView);
-                    allResult.setTextColor(red);
+                    allResult.setTextColor(RED);
                 }
             }
         }
