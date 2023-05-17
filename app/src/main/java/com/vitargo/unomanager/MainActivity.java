@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
 
         TableLayout scoreTable = findViewById(R.id.score_table);
         for (int i = 0; i < scoreTable.getChildCount(); i++) {
-            if(scoreTable.getChildAt(i) instanceof TableRow){
-                TableRow row = (TableRow) scoreTable.getChildAt(i);
+            if(scoreTable.getChildAt(i) instanceof TableRow row){
                 if (row.getChildCount() > 1) {
                     row.getChildAt(1).setOnKeyListener(getOnKeyListener((EditText) row.getChildAt(1), (TextView) row.getChildAt(2)));
                 }
@@ -61,8 +60,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
             int all = scoreTable.getChildCount();
             int count = 0;
             for (int i = 0; i < (size * 3); i++) {
-                if(scoreTable.getChildAt(i) instanceof TableRow){
-                    TableRow row = (TableRow) scoreTable.getChildAt(i);
+                if(scoreTable.getChildAt(i) instanceof TableRow row){
                     if (row.getChildCount() > 1) {
                         count++;
                         showPlayerRow((TextView) row.getChildAt(2), (TableRow) scoreTable.getChildAt(i - 1), row, scoreTable.getChildAt(i + 1), (TextView) row.getChildAt(0),
@@ -87,8 +85,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
             int count = 0;
             for (int i = 0; i < size; i++) {
                 View child = layout.getChildAt(i);
-                if (child instanceof TableRow && ((TableRow) child).getChildCount() > 1) {
-                    TableRow row = (TableRow) child;
+                if (child instanceof TableRow row && ((TableRow) child).getChildCount() > 1) {
                     if (row.getVisibility() == View.VISIBLE) {
                         count++;
                         TextView player = (TextView) row.getChildAt(0);
@@ -150,15 +147,13 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
 
             HashMap<Integer, Integer> sortedMap = customSort();
             int[] keys = new int[0];
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                keys = sortedMap.keySet().stream().mapToInt(Number::intValue).toArray();
-            }
+            keys = sortedMap.keySet().stream().mapToInt(Number::intValue).toArray();
             for (Integer textView : keys) {
                 TextView allResult = findViewById(textView);
                 allResult.setTextColor(Color.BLACK);
             }
 
-            if (resultTable.get(keys[keys.length - 1]) != resultTable.get(keys[0])) {
+            if (!Objects.equals(resultTable.get(keys[keys.length - 1]), resultTable.get(keys[0]))) {
                 TextView playerResult = findViewById(keys[0]);
                 playerResult.setTextColor(green);
                 for (int i = 1; i < keys.length; i++) {
@@ -184,9 +179,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
 
     private HashMap<Integer, Integer> customSort() {
         List<Map.Entry<Integer, Integer>> list = new LinkedList<>(resultTable.entrySet());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Collections.sort(list, Comparator.comparing(o -> o.getValue()));
-        }
+        list.sort(Comparator.comparing(Map.Entry::getValue));
         HashMap<Integer, Integer> sortedMap = new LinkedHashMap<>();
         for (Map.Entry<Integer, Integer> map : list) {
             sortedMap.put(map.getKey(), map.getValue());
@@ -245,48 +238,38 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
             counter++;
 
             switch (counter) {
-                case 1:
-                    showPlayerRow(findViewById(R.id.result_1), findViewById(R.id.row_1_1), findViewById(R.id.row_1_2),
-                            findViewById(R.id.row_1_3), findViewById(R.id.player_1), name, "0");
-                    break;
-                case 2:
-                    showPlayerRow(findViewById(R.id.result_2), findViewById(R.id.row_2_1), findViewById(R.id.row_2_2),
-                            findViewById(R.id.row_2_3), findViewById(R.id.player_2), name, "0");
-                    break;
-                case 3:
-                    showPlayerRow(findViewById(R.id.result_3), findViewById(R.id.row_3_1), findViewById(R.id.row_3_2),
-                            findViewById(R.id.row_3_3), findViewById(R.id.player_3), name, "0");
-                    break;
-                case 4:
-                    showPlayerRow(findViewById(R.id.result_4), findViewById(R.id.row_4_1), findViewById(R.id.row_4_2),
-                            findViewById(R.id.row_4_3), findViewById(R.id.player_4), name, "0");
-                    break;
-                case 5:
-                    showPlayerRow(findViewById(R.id.result_5), findViewById(R.id.row_5_1), findViewById(R.id.row_5_2),
-                            findViewById(R.id.row_5_3), findViewById(R.id.player_5), name, "0");
-                    break;
-                case 6:
-                    showPlayerRow(findViewById(R.id.result_6), findViewById(R.id.row_6_1), findViewById(R.id.row_6_2),
-                            findViewById(R.id.row_6_3), findViewById(R.id.player_6), name, "0");
-                    break;
-                case 7:
-                    showPlayerRow(findViewById(R.id.result_7), findViewById(R.id.row_7_1), findViewById(R.id.row_7_2),
-                            findViewById(R.id.row_7_3), findViewById(R.id.player_7), name, "0");
-                    break;
-                case 8:
-                    showPlayerRow(findViewById(R.id.result_8), findViewById(R.id.row_8_1), findViewById(R.id.row_8_2),
-                            findViewById(R.id.row_8_3), findViewById(R.id.player_8), name, "0");
-                    break;
-                case 9:
-                    showPlayerRow(findViewById(R.id.result_9), findViewById(R.id.row_9_1), findViewById(R.id.row_9_2),
-                            findViewById(R.id.row_9_3), findViewById(R.id.player_9), name, "0");
-                    break;
-                case 10:
-                    showPlayerRow(findViewById(R.id.result_10), findViewById(R.id.row_10_1), findViewById(R.id.row_10_2),
-                            findViewById(R.id.row_10_3), findViewById(R.id.player_10), name, "0");
-                    break;
+                case 1 ->
+                        showPlayerRow(findViewById(R.id.result_1), findViewById(R.id.row_1_1), findViewById(R.id.row_1_2),
+                                findViewById(R.id.row_1_3), findViewById(R.id.player_1), name, "0");
+                case 2 ->
+                        showPlayerRow(findViewById(R.id.result_2), findViewById(R.id.row_2_1), findViewById(R.id.row_2_2),
+                                findViewById(R.id.row_2_3), findViewById(R.id.player_2), name, "0");
+                case 3 ->
+                        showPlayerRow(findViewById(R.id.result_3), findViewById(R.id.row_3_1), findViewById(R.id.row_3_2),
+                                findViewById(R.id.row_3_3), findViewById(R.id.player_3), name, "0");
+                case 4 ->
+                        showPlayerRow(findViewById(R.id.result_4), findViewById(R.id.row_4_1), findViewById(R.id.row_4_2),
+                                findViewById(R.id.row_4_3), findViewById(R.id.player_4), name, "0");
+                case 5 ->
+                        showPlayerRow(findViewById(R.id.result_5), findViewById(R.id.row_5_1), findViewById(R.id.row_5_2),
+                                findViewById(R.id.row_5_3), findViewById(R.id.player_5), name, "0");
+                case 6 ->
+                        showPlayerRow(findViewById(R.id.result_6), findViewById(R.id.row_6_1), findViewById(R.id.row_6_2),
+                                findViewById(R.id.row_6_3), findViewById(R.id.player_6), name, "0");
+                case 7 ->
+                        showPlayerRow(findViewById(R.id.result_7), findViewById(R.id.row_7_1), findViewById(R.id.row_7_2),
+                                findViewById(R.id.row_7_3), findViewById(R.id.player_7), name, "0");
+                case 8 ->
+                        showPlayerRow(findViewById(R.id.result_8), findViewById(R.id.row_8_1), findViewById(R.id.row_8_2),
+                                findViewById(R.id.row_8_3), findViewById(R.id.player_8), name, "0");
+                case 9 ->
+                        showPlayerRow(findViewById(R.id.result_9), findViewById(R.id.row_9_1), findViewById(R.id.row_9_2),
+                                findViewById(R.id.row_9_3), findViewById(R.id.player_9), name, "0");
+                case 10 ->
+                        showPlayerRow(findViewById(R.id.result_10), findViewById(R.id.row_10_1), findViewById(R.id.row_10_2),
+                                findViewById(R.id.row_10_3), findViewById(R.id.player_10), name, "0");
             }
-            dialog.getDialog().cancel();
+            Objects.requireNonNull(dialog.getDialog()).cancel();
         }
     }
 
