@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/picture">
+
+    <TextView
+            android:id="@+id/label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:text="@string/games_title"/>
+    <Button
+            android:id="@+id/button_uno"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_uno_title"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="157dp"
+            android:background="#CDDC39"
+            android:layout_centerInParent="true"/>
+
+    <Button
+            android:id="@+id/button_bridge"
+            android:text="@string/button_bridge_title"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="247dp"
+            android:background="#CDDC39"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    <Button
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_back_title"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerInParent="true"/>
+</RelativeLayout>

@@ -21,8 +21,9 @@
     />
     <Button
             android:id="@+id/button_add_player"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:layout_constraintWidth_percent="0.35"
             android:text="@string/add_player"
             android:background="#CDDC39"
             style="@style/Widget.AppCompat.Button"
@@ -36,8 +37,9 @@
     />
     <Button
             android:id="@+id/button_clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:layout_constraintWidth_percent="0.25"
             android:text="@string/button_clear"
             android:background="#DCDCDC"
             style="@style/Widget.AppCompat.Button"
@@ -49,11 +51,28 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
     />
+    <Button
+            android:id="@+id/button_close"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:layout_constraintWidth_percent="0.25"
+            android:text="@string/button_close"
+            android:background="#DCDCDC"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+    />
 
     <Button
             android:id="@+id/button_rule"
-            android:layout_width="106dp"
-            android:layout_height="48dp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:layout_constraintWidth_percent="0.25"
             android:text="@string/button_rule"
             android:background="#DCDCDC"
             style="@style/Widget.AppCompat.Button"
@@ -62,15 +81,19 @@
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:paddingRight="10dp"
-
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp" android:gravity="center" android:orientation="vertical"
-            app:layout_constrainedHeight="true" app:layout_constrainedWidth="true"
-            app:layout_constraintVertical_chainStyle="packed" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.609" app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.609"
+            app:layout_constraintEnd_toEndOf="parent"/>
     <ScrollView
             android:layout_marginTop="100dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="50dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
@@ -85,6 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:stretchColumns="1"
+                    android:id="@+id/score_table"
                     app:layout_constraintTop_toTopOf="parent">
                 <TableRow android:layout_width="match_parent"
                           android:visibility="invisible"
@@ -600,6 +624,37 @@
                             android:id="@+id/result_10"
                             android:textStyle="bold"
                             android:textSize="20sp"/>
+                    <Button
+                            android:id="@+id/button_add_player2"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            app:layout_constraintWidth_percent="0.35"
+                            android:text="@string/add_player"
+                            android:background="#CDDC39"
+                            style="@style/Widget.AppCompat.Button"
+                            android:layout_margin="10dp"
+                            android:padding="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+
+                            android:layout_marginEnd="8dp"/>
+                    <Button
+                            android:id="@+id/button_clear2"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            app:layout_constraintWidth_percent="0.25"
+                            android:text="@string/button_clear"
+                            android:background="#DCDCDC"
+                            style="@style/Widget.AppCompat.Button"
+                            android:layout_margin="10dp"
+                            android:padding="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                    />
                 </TableRow>
                 <View
                         android:visibility="invisible"
@@ -609,7 +664,10 @@
             </TableLayout>
         </LinearLayout>
     </ScrollView>
-    <androidx.constraintlayout.widget.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                            app:constraint_referenced_ids="button_rule" android:id="@+id/group"/>
+    <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="button_rule"
+            android:id="@+id/group"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

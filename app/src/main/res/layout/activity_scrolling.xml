@@ -37,21 +37,22 @@
 
     <include layout="@layout/content_scrolling" android:id="@+id/rule_text"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/fab_margin"
-            app:layout_anchor="@id/app_bar"
-            app:layout_anchorGravity="bottom|end"
-            app:srcCompat="@android:drawable/ic_dialog_info" app:backgroundTint="#CDDC39"/>
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/fab_info"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginEnd="@dimen/fab_margin"-->
+<!--            app:layout_anchor="@id/app_bar"-->
+<!--            app:layout_anchorGravity="bottom|end"-->
+<!--            app:srcCompat="@android:drawable/ic_dialog_info" app:backgroundTint="#CDDC39"/>-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_revert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/fab_margin"
             app:layout_anchor="@id/app_bar"
-            app:layout_anchorGravity="bottom|left"
-            app:srcCompat="@android:drawable/ic_menu_revert" app:backgroundTint="#CDDC39"/>
+            app:layout_anchorGravity="bottom|end"
+            app:srcCompat="@android:drawable/ic_menu_revert" app:backgroundTint="#CDDC39"
+            android:tint="#050505"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
