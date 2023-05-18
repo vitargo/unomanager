@@ -19,9 +19,18 @@
     <string name="button_clear">Очистити</string>
     <string name="button_rule">Правила</string>
     <string name="button_close">Закрити</string>
+    <string name="button_stat">Статистика</string>
+    <string name="column_name">Імʼя</string>
+    <string name="column_score">Бали</string>
+    <string name="column_date">Дата</string>
     <string name="games_title">
         <big>
             <b>\n Каталог ігор UnoManager</b>
+        </big>
+    </string>
+    <string name="games_stat">
+        <big>
+            <b>\n Статистика ігор UnoManager</b>
         </big>
     </string>
     <string name="button_uno_title">Уно</string>

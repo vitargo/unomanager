@@ -12,6 +12,9 @@
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".Statistic"
+                android:exported="true"/>
+        <activity
                 android:name=".Games"
                 android:exported="true"/>
         <activity

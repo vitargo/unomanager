@@ -1,9 +1,12 @@
 package com.vitargo.unomanager;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,14 +16,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import com.vitargo.db.ScoreContract;
+import com.vitargo.db.Winner;
+import com.vitargo.db.WinnerRateDBHelper;
 
+import java.io.Serializable;
 import java.util.*;
 
 import static java.lang.String.valueOf;
 
 public class MainActivity extends AppCompatActivity implements AddPlayerDialog.AddPlayerDialogListener {
     private int counter = 0;
-    Map<Integer, Integer> resultTable;
+    private Map<Integer, Integer> resultTable;
+    private WinnerRateDBHelper dbHelper;
+    private SQLiteDatabase db;
+    private long newRowId;
     private static final int GREEN = Color.rgb(107, 142, 35);
     private static final int RED = Color.rgb(178, 34, 34);
 
@@ -29,11 +39,14 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         resultTable = new HashMap<>();
+        newRowId = 0;
         setContentView(R.layout.activity_main);
+
+        dbHelper = new WinnerRateDBHelper(this);
 
         TableLayout scoreTable = findViewById(R.id.score_table);
         for (int i = 0; i < scoreTable.getChildCount(); i++) {
-            if(scoreTable.getChildAt(i) instanceof TableRow row){
+            if (scoreTable.getChildAt(i) instanceof TableRow row) {
                 if (row.getChildCount() > 1) {
                     row.getChildAt(1).setOnKeyListener(getOnKeyListener((EditText) row.getChildAt(1), (TextView) row.getChildAt(2)));
                 }
@@ -44,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
         Button clear = findViewById(R.id.button_clear);
         Button rule = findViewById(R.id.button_rule);
         Button close = findViewById(R.id.button_close);
+        Button stat = findViewById(R.id.button_stat);
+
+        stat.setOnClickListener(view -> getStatistic());
 
         button.setOnClickListener(view -> addPlayer());
 
@@ -58,10 +74,9 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
 
         if (savedInstanceState != null) {
             int size = savedInstanceState.getInt("size");
-            int all = scoreTable.getChildCount();
             int count = 0;
             for (int i = 0; i < (size * 3); i++) {
-                if(scoreTable.getChildAt(i) instanceof TableRow row){
+                if (scoreTable.getChildAt(i) instanceof TableRow row) {
                     if (row.getChildCount() > 1) {
                         count++;
                         showPlayerRow((TextView) row.getChildAt(2), (TableRow) scoreTable.getChildAt(i - 1), row, scoreTable.getChildAt(i + 1), (TextView) row.getChildAt(0),
@@ -73,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
             int[] keys = customSort().keySet().stream().mapToInt(Number::intValue).toArray();
             TextView maxScore = findViewById(keys[0]);
             maxScore.setTextColor(GREEN);
-            TextView minScore = findViewById(keys[keys.length-1]);
+            TextView minScore = findViewById(keys[keys.length - 1]);
             minScore.setTextColor(RED);
         }
     }
@@ -83,6 +98,12 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
         TableLayout scoreTable = findViewById(R.id.score_table);
         checkRowVisibilityAndSaveScore(scoreTable, outState);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        dbHelper.close();
+        super.onDestroy();
     }
 
     private void checkRowVisibilityAndSaveScore(TableLayout layout, Bundle outState) {
@@ -136,19 +157,41 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
             score.clearFocus();
             score.getText().clear();
         } else {
-
             int sum = current + total;
             score.getText().clear();
             score.clearFocus();
+            resultTable.put(result.getId(), sum);
             if (sum >= 200) {
                 String message = "Учасник набрав максимальну кількість балів!";
                 String title = "Гра завершена!";
+                Integer min = Collections.min(resultTable.entrySet(), Map.Entry.comparingByValue()).getKey();
+                if (min != null || min != 0) {
+                    db = dbHelper.getWritableDatabase();
+                    TextView winner = findViewById(min);
+                    TableRow parent = (TableRow) winner.getParent();
+                    TextView player = (TextView) parent.getChildAt(0);
+                    ContentValues values = new ContentValues();
+                    values.put(ScoreContract.WinnerRate.COLUMN_WINNER_NAME, player.getText().toString());
+                    values.put(ScoreContract.WinnerRate.COLUMN_WINNER_SCORE, Integer.parseInt(winner.getText().toString()));
+                    Date c = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
+                    values.put(ScoreContract.WinnerRate.COLUMN_DATESTAMP, df.format(c));
+                    if(newRowId == 0){
+                        newRowId = db.insert(ScoreContract.WinnerRate.TABLE_NAME, null, values);
+                    } else {
+                        String selection = ScoreContract.WinnerRate._ID + " = ?";
+                        String[] selectionArgs = { String.valueOf(newRowId) };
+                        newRowId = db.update(ScoreContract.WinnerRate.TABLE_NAME, values, selection, selectionArgs);
+                    }
+
+                }
+
                 AlertDialog alertDialog = getAlertDialog(message, title);
                 alertDialog.show();
             }
             result.setText(valueOf(sum));
 
-            resultTable.put(result.getId(), sum);
+
             HashMap<Integer, Integer> sortedMap = customSort();
             int[] keys = sortedMap.keySet().stream().mapToInt(Number::intValue).toArray();
             for (Integer textView : keys) {
@@ -182,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
 
     private HashMap<Integer, Integer> customSort() {
         List<Map.Entry<Integer, Integer>> list = new LinkedList<>(resultTable.entrySet());
-        list.sort(Comparator.comparing(Map.Entry::getValue));
+        list.sort(Map.Entry.comparingByValue());
         HashMap<Integer, Integer> sortedMap = new LinkedHashMap<>();
         for (Map.Entry<Integer, Integer> map : list) {
             sortedMap.put(map.getKey(), map.getValue());
@@ -197,6 +240,11 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
 
     private void showCatalog() {
         Intent intent = new Intent(this, Games.class);
+        startActivity(intent);
+    }
+
+    private void getStatistic() {
+        Intent intent = new Intent(this, Statistic.class);
         startActivity(intent);
     }
 

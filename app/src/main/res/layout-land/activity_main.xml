@@ -68,6 +68,23 @@
     />
 
     <Button
+            android:id="@+id/button_stat"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:layout_constraintWidth_percent="0.3"
+            android:text="@string/button_stat"
+            android:background="#DCDCDC"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+    />
+
+    <Button
             android:id="@+id/button_rule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

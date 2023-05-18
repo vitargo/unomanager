@@ -5,8 +5,7 @@
               android:layout_height="wrap_content"
               android:layout_margin="0dp"
               android:layout_marginTop="0dp"
-              android:scaleType="fitCenter"
->
+              android:scaleType="fitCenter">
     <TextView
             android:text="@string/add_player_question"
             android:layout_width="match_parent"
