@@ -25,15 +25,18 @@ public class WinnerRateDBHelper extends SQLiteOpenHelper {
     public WinnerRateDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_STATISTIC);
     }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_STATISTIC);
         onCreate(db);
     }
+
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
@@ -57,8 +60,8 @@ public class WinnerRateDBHelper extends SQLiteOpenHelper {
         return winnerList;
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM "+ ScoreContract.WinnerRate.TABLE_NAME);
+        db.execSQL("DELETE FROM " + ScoreContract.WinnerRate.TABLE_NAME);
     }
 }

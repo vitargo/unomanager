@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
     private Map<Integer, Integer> resultTable;
     private WinnerRateDBHelper dbHelper;
     private SQLiteDatabase db;
-    private long newRowId;
+    public static long newRowId;
     private static final int GREEN = Color.rgb(107, 142, 35);
     private static final int RED = Color.rgb(178, 34, 34);
 
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
             score.getText().clear();
             score.clearFocus();
             resultTable.put(result.getId(), sum);
-            if (sum >= 200) {
+            if (sum >= 200 || newRowId != 0) {
                 String message = "Учасник набрав максимальну кількість балів!";
                 String title = "Гра завершена!";
                 Integer min = Collections.min(resultTable.entrySet(), Map.Entry.comparingByValue()).getKey();
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements AddPlayerDialog.A
                     TextView player = (TextView) parent.getChildAt(0);
                     ContentValues values = new ContentValues();
                     values.put(ScoreContract.WinnerRate.COLUMN_WINNER_NAME, player.getText().toString());
-                    values.put(ScoreContract.WinnerRate.COLUMN_WINNER_SCORE, Integer.parseInt(winner.getText().toString()));
+                    values.put(ScoreContract.WinnerRate.COLUMN_WINNER_SCORE, resultTable.get(min));
                     Date c = Calendar.getInstance().getTime();
                     SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
                     values.put(ScoreContract.WinnerRate.COLUMN_DATESTAMP, df.format(c));

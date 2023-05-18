@@ -40,6 +40,7 @@ public class Statistic extends AppCompatActivity {
 
     private void clearStat(){
         dbHelper.deleteAll();
+        MainActivity.newRowId = 0;
         this.recreate();
     }
 
